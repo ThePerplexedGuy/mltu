@@ -25,23 +25,23 @@ from io import BytesIO
 from zipfile import ZipFile
 
 
-def download_and_unzip(url, extract_to="Datasets", chunk_size=1024*1024):
-    http_response = urlopen(url)
+# def download_and_unzip(url, extract_to="Datasets", chunk_size=1024*1024):
+#     http_response = urlopen(url)
 
-    data = b""
-    iterations = http_response.length // chunk_size + 1
-    for _ in tqdm(range(iterations)):
-        data += http_response.read(chunk_size)
+#     data = b""
+#     iterations = http_response.length // chunk_size + 1
+#     for _ in tqdm(range(iterations)):
+#         data += http_response.read(chunk_size)c
 
-    zipfile = ZipFile(BytesIO(data))
-    zipfile.extractall(path=extract_to)
+#     zipfile = ZipFile(BytesIO(data))
+#     zipfile.extractall(path=extract_to)
 
 dataset_path = os.path.join("Datasets", "IAM_Words")
-if not os.path.exists(dataset_path):
-    download_and_unzip("https://git.io/J0fjL", extract_to="Datasets")
+# if not os.path.exists(dataset_path):
+#     download_and_unzip("https://git.io/J0fjL", extract_to="Datasets")
 
-    file = tarfile.open(os.path.join(dataset_path, "words.tgz"))
-    file.extractall(os.path.join(dataset_path, "words"))
+#     file = tarfile.open(os.path.join(dataset_path, "words.tgz"))
+#     file.extractall(os.path.join(dataset_path, "words"))
 
 dataset, vocab, max_len = [], set(), 0
 
@@ -127,7 +127,7 @@ model2onnx = Model2onnx(f"{configs.model_path}/model.h5")
 model.fit(
     train_data_provider,
     validation_data=val_data_provider,
-    epochs=configs.train_epochs,
+    epochs=10,
     callbacks=[earlystopper, checkpoint, trainLogger, reduceLROnPlat, tb_callback, model2onnx],
     workers=configs.train_workers
 )
