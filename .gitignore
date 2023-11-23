@@ -13,3 +13,5 @@ dist
 .python-version
 
 test
+
+*.png
